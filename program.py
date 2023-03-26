@@ -1,19 +1,42 @@
-points_en = {1: 'AEIOULNSTR', 2: 'DG', 3: 'BCMP', 4: 'FHVWY', 5: 'K', 8: 'XJ', 10: 'QZ'}
-points_ru = {1: 'АВЕИНОРСТ', 2: 'ДКЛМПУ', 3: 'БГЁЬЯ', 4: 'ЙЫ', 5: 'ЖЗХЦЧ', 8: 'ШЭЮ', 10: 'ФЩЪ'}
-word = input('Enter the word: ').upper()
-print (word)
-wordPrice = 0
-lettercount = 0
+# Задача 16:
+# Требуется вычислить, сколько раз встречается некоторое число X в массиве A[1..N].
+# Пользователь вводит натуральное число N – количество элементов в массиве и число, которое необходимо проверить - X.
+# Заполните массив случайными натуральными числами от 1 до N/2.
+# Выведите, сколько раз X встречается в массиве.
 
+# Ввод: 5
+# Ввод: 1
 
-for letter in word:
-    for letterPrice in points_en:
-        if letter in points_en[letterPrice]:
-            wordPrice += letterPrice
-            lettercount +=1
-    if lettercount == 0:
-        for letterPrice in points_ru:
-            if letter in points_ru[letterPrice]:
-                wordPrice += letterPrice
+# 1 2 1 2 2
+# Вывод: 2
 
-print(wordPrice)
+from random import randrange
+from input_check import IntCheckedInputLtd
+
+arraySizeLimit = 101 # limited just for simplicity
+arraySize = IntCheckedInputLtd(
+    f'Enter the size of the array, not more than {arraySizeLimit-1}',
+    arraySizeLimit)
+
+RandomArray = [randrange ( 1, arraySize // 2 ) for i in range(arraySize)]
+print(RandomArray)  # it is interesting to see what the progam has added in into the array
+
+arrayMenber = IntCheckedInputLtd(
+    f'Enter the number to be found in the array, not more than {arraySizeLimit // 2}',
+    arraySizeLimit // 2 + 1)
+
+print(f'Count of {arrayMenber} in the array founded bu function "array.count" is:  {RandomArray.count(arrayMenber)}')
+
+memberCount = 0
+for i in RandomArray:
+    if i == arrayMenber:
+        memberCount += 1
+
+print(f'Count of {arrayMenber} in the array founded by iteration is: {memberCount}')
+
+memberCount = 0
+for i in range(arraySize):
+    if RandomArray [i] == arrayMenber:
+        memberCount += 1
+
+print(f'Count of {arrayMenber} in the array founded by index cycle is: {memberCount}')
