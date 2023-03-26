@@ -1,0 +1,1 @@
+/home/george/Documents/Learning/Python/python_course_1/seminar_2/input_check.py
