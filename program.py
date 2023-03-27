@@ -48,3 +48,5 @@ for i in range(arraySize):
 Neibours = [i for i in RandomArray if i == nearest]
 
 print (f'The minimal nearest to {arrayMember} member of the array is {nearest} repeated {len(Neibours)} times.')
+
+
