@@ -1,52 +1,46 @@
-# Задача 18:
-# Требуется найти в массиве A[1..N] самый близкий по величине элемент к заданному числу X.
-# Пользователь вводит натуральное число N – количество элементов в массиве и число, которое необходимо проверить - X.
-# Заполните массив случайными натуральными числами от 1 до N.
-# Выведите, ближайший к X элемент. Если есть несколько элементов, которые равноудалены от X, выведите наименьший по величине.
+# Задача 20:
+# В настольной игре Скрабл (Scrabble) каждая буква имеет определенную ценность.
+# В случае с английским алфавитом очки распределяются так:
+# A, E, I, O, U, L, N, S, T, R – 1 очко;
+# D, G – 2 очка;
+# B, C, M, P – 3 очка;
+# F, H, V, W, Y – 4 очка;
+# K – 5 очков;
+# J, X – 8 очков;
+# Q, Z – 10 очков.
 
-# Ввод: 10
-# Ввод: 7
-# 1 2 1 8 9 6 5 4 3 4
-# Вывод: 6
+# А русские буквы оцениваются так:
+# А, В, Е, И, Н, О, Р, С, Т – 1 очко;
+# Д, К, Л, М, П, У – 2 очка;
+# Б, Г, Ё, Ь, Я – 3 очка;
+# Й, Ы – 4 очка;
+# Ж, З, Х, Ц, Ч – 5 очков;
+# Ш, Э, Ю – 8 очков;
+# Ф, Щ, Ъ – 10 очков.
 
-from random import randrange
-from input_check import IntCheckedInputLtd
+# Напишите программу, которая вычисляет стоимость введенного пользователем слова.
+# Будем считать, что на вход подается только одно слово, которое содержит либо только английские, либо только русские буквы.
 
-arraySizeLimit = 100 # limited just for simplicity
-arrayMemberLimit = 100 # limited just for simplicity
+# Ввод: ноутбук
+# Вывод: 12
 
-# let's ask the array size
-arraySize = IntCheckedInputLtd(
-    f'Enter the size of the array, not more than {arraySizeLimit}',
-    arraySizeLimit + 1)
-
-#filling the array by random ints
-RandomArray = [randrange ( 1, arrayMemberLimit ) for i in range(arraySize)]
-
-#print(RandomArray)  # it is interesting to see what the program has filled in the array
-
-#asking the number for searching nearests
-arrayMember = IntCheckedInputLtd(
-    f'Enter the number to find nearests in the array, not more than {arrayMemberLimit}',
-    arrayMemberLimit + 1)
-
-nearest = RandomArray[0]
-difference = arrayMember - nearest
-
-#searching the minimal nearest in the array
-for i in range(arraySize):
-    if abs( arrayMember - RandomArray[i] ) <= abs( difference ):
-#if we have 2 different neibours in the same distance - select smaller
-        if abs( difference ) == abs( arrayMember - RandomArray[i] ): 
-            nearest = min( RandomArray[i], nearest )
-#usually just get a new nearest            
-        else:
-            nearest = RandomArray[i]
-        difference = arrayMember - nearest
-
-#how many times the nearest present in the array?        
-Neibours = [i for i in RandomArray if i == nearest]
-
-print (f'The minimal nearest to {arrayMember} member of the array is {nearest} repeated {len(Neibours)} times.')
+points_en = {1: 'AEIOULNSTR', 2: 'DG', 3: 'BCMP', 4: 'FHVWY', 5: 'K', 8: 'XJ', 10: 'QZ'}
+points_ru = {1: 'АВЕИНОРСТ', 2: 'ДКЛМПУ', 3: 'БГЁЬЯ', 4: 'ЙЫ', 5: 'ЖЗХЦЧ', 8: 'ШЭЮ', 10: 'ФЩЪ'}
+word = input('Enter the word: ').upper()
+#print (word)
+wordPrice = 0
+lettercount = 0
 
 
+for letter in word:
+    for letterPrice in points_en:
+        if letter in points_en[letterPrice]:
+            wordPrice += letterPrice
+            lettercount +=1
+    if lettercount == 0:
+        for letterPrice in points_ru:
+            if letter in points_ru[letterPrice]:
+                wordPrice += letterPrice
+
+print(wordPrice)
+    
